@@ -1,0 +1,156 @@
+body {
+    background-color: #f3f6fb;
+}
+.card-header {
+    background-color: #ffff !important;
+}
+.card-container {
+  display: flex;
+}
+
+.card {
+  flex-grow: 1; /* Allow cards to expand */
+  margin-right: 10px; /* Adjust spacing between cards */
+}
+
+.vertical-line {
+  width: 1px; /* Adjust width of the vertical line */
+  background-color: #ccc; /* Adjust color of the vertical line */
+  margin: 0 5px; /* Adjust spacing around the vertical line */
+}
+/* Styling for table header */
+.table-dark th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+/* Styling for table cells */
+.table-bordered td {
+  border-color: #dee2e6;
+}
+
+/* Style for the modal header */
+.modal-header {
+  background-color: #343a40;
+  color: #fff;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+}
+
+/* Style for the modal body */
+.modal-body {
+  background-color: #f8f9fa;
+}
+
+/* Style for form labels */
+.modal-body label {
+  font-weight: bold;
+}
+
+/* Style for form inputs */
+.modal-body input[type="text"],
+.modal-body input[type="number"],
+.modal-body input[type="date"],
+.modal-body input[type="time"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+/* Style for checkboxes */
+.modal-body .form-check-input {
+  margin-top: 0.3rem;
+}
+
+/* Style for modal footer */
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+}
+
+/* Style for buttons */
+.modal-footer button {
+  padding: 0.5rem 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Additional styles as needed */
+/* Style for checkbox label */
+.form-check-label {
+  margin-left: 5px;
+}
+
+/* Style for checkboxes */
+.form-check-input {
+  margin-right: 10px;
+}
+
+/* Style for form inputs */
+.form-control {
+  margin-top: 5px;
+}
+
+/* Style for modal footer */
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+}
+
+/* Style for buttons */
+.btn {
+  margin-top: 10px;
+}
+
+/* Additional styles as needed */
+/* Style for checkboxes */
+.modal-body .form-check-input {
+  margin-top: 0.3rem;
+}
+
+/* Style for checkbox labels */
+.modal-body .form-check-label {
+  margin-left: 0.5rem;
+}
+
+/* Style for form inputs */
+.modal-body input[type="text"],
+.modal-body input[type="number"],
+.modal-body input[type="date"],
+.modal-body input[type="time"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+/* Adjust margin for checkbox container */
+.modal-body .checkbox-container {
+  margin-top: 0.5rem;
+}
+
+/* Adjust margin for checkbox labels within the container */
+.modal-body .checkbox-container .form-check-label {
+  margin-left: 0.2rem;
+}
+
+/* Additional styles as needed */
+/* Adjustments for the "Audio Required" checkbox */
+#audioRequiredCheckbox {
+  margin-right: 10px;
+}
+
+/* Adjustments for the "Audio Details" input field */
+#audioDetails {
+  margin-top: 10px;
+}
+
+/* Additional styling for the modal footer buttons */
+.modal-footer button {
+  margin-right: 10px;
+}

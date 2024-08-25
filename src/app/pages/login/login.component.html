@@ -1,0 +1,54 @@
+
+
+<div class="parent">
+  <div class="container" [ngClass]="isSignDivVisiable ? 'active' : ''" id="container">
+    <div class="form-container sign-up">
+      <form #signupForm="ngForm" (ngSubmit)="onRegister()">
+        <h1>Create Account</h1><br>
+        <div>
+          <input type="text" name="name" [(ngModel)]="signUpObj.name" placeholder="Name" required>
+
+
+          <input type="email" name="email" [(ngModel)]="signUpObj.email" placeholder="Email" required>
+
+
+          <input type="password" name="password" [(ngModel)]="signUpObj.password" placeholder="Password" required>
+
+
+          <select name="role" [(ngModel)]="signUpObj.role" required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="FACULTY">Faculty</option>
+            <option value="APPROVAL_COMMITTEE">Approval Committee</option>
+          </select>
+
+
+          <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+        </div>
+
+      </form>
+
+        </div>
+        <div class="form-container sign-in" >
+            <form>
+                <h1>Sign In</h1><br>
+                <input type="email" name="email" [(ngModel)]="loginObj.email" placeholder="Email">
+                <input type="password" name="password"   [(ngModel)]="loginObj.password" placeholder="Password">
+                <button (click)="onLogin()">Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h4>Welcome Back!</h4>
+                  <img src="https://bip.bitsathy.ac.in/images/login-logo-light-mode.png" alt="Company Logo" id="logo">
+                    <button type="button" class="hidden" id="login" (click)="isSignDivVisiable = false">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                  <img src="https://bip.bitsathy.ac.in/images/login-logo-light-mode.png" alt="Company Logo" id="logo">
+                    <button type="button" class="hidden" id="register" (click)="isSignDivVisiable = true">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

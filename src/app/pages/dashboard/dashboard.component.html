@@ -1,0 +1,286 @@
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-6">
+      <h4>EVENTS</h4>
+    </div>
+    <div *ngIf="currentUser.role==='FACULTY'" class="col-6 text-end">
+      <button class="btn btn-outline-success mb-3" (click)="openModel()">Register New Event</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <ng-container *ngIf="studentList.length !== 0; else noRecords">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Organiser</th>
+            <th>Department</th>
+            <th>Mobile No</th>
+            <th>Participants (Internal)</th>
+            <th>Participants (External)</th>
+            <th>Guest</th>
+            <th>Action</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of studentList">
+            <td>{{ item.eventName }}</td>
+            <td>{{ item.eventDate }}</td>
+            <td>{{ item.eventTime }}</td>
+            <td>{{ item.organiserName }}</td>
+            <td>{{ item.organiserDepartment }}</td>
+            <td>{{ item.organiserMobile }}</td>
+            <td>{{ item.participantsInternal }}</td>
+            <td>{{ item.participantsExternal }}</td>
+            <td>{{ item.guestName }}, {{ item.guestDesignation }}, {{ item.guestOrganization }}</td>
+            <td>
+              <button *ngIf="currentUser.role==='APPROVAL_COMMITTEE'" class="btn btn-sm btn-primary" (click)="onEdit(item)">Edit</button>
+              <button  *ngIf="currentUser.role==='FACULTY'" class="btn btn-sm btn-danger" (click)="onDelete(item)">Delete</button>
+            </td>
+            <td>
+              <button  class="btn btn-sm btn-danger" >Approval/rejected</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noRecords>
+        <div class="col-12 p-4 text-center">
+          <p>No Record Found. Create New Record</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="modal" id="myModal" #myModel>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Faculty Event Booking</h4>
+          <button type="button" class="btn-close" (click)="closeModel()"></button>
+        </div>
+        <div class="modal-body" style="overflow-y: scroll">
+          <div class="row">
+            <div class="col-12">
+              <label for="eventName">Event Name</label>
+              <input type="text" id="eventName" [(ngModel)]="studentObj.eventName" name="eventName" class="form-control" placeholder="Event Name">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="eventDate">Event Date</label>
+              <input type="date" id="eventDate" [(ngModel)]="studentObj.eventDate" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="eventTime">Event Time</label>
+              <input type="time" id="eventTime" [(ngModel)]="studentObj.eventTime" class="form-control">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <label for="organiserName">Organiser Name</label>
+              <input type="text" id="organiserName" [(ngModel)]="studentObj.organiserName" class="form-control" placeholder="Organiser Name">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="organiserDepartment">Organiser Department</label>
+              <input type="text" id="organiserDepartment" [(ngModel)]="studentObj.organiserDepartment" class="form-control" placeholder="Organiser Department">
+            </div>
+            <div class="col-6">
+              <label for="organiserMobile">Organiser Mobile No</label>
+              <input type="text" id="organiserMobile" [(ngModel)]="studentObj.organiserMobile" class="form-control" placeholder="Organiser Mobile No">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="participantsInternal">Participants (Internal)</label>
+              <input type="number" id="participantsInternal" [(ngModel)]="studentObj.participantsInternal" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="participantsExternal">Participants (External)</label>
+              <input type="number" id="participantsExternal" [(ngModel)]="studentObj.participantsExternal" class="form-control">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <label for="guestName">Guest Name</label>
+              <input type="text" id="guestName" [(ngModel)]="studentObj.guestName" class="form-control" placeholder="Guest Name">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="guestDesignation">Guest Designation</label>
+              <input type="text" id="guestDesignation" [(ngModel)]="studentObj.guestDesignation" class="form-control" placeholder="Guest Designation">
+            </div>
+            <div class="col-6">
+              <label for="guestOrganization">Guest Organization</label>
+              <input type="text" id="guestOrganization" [(ngModel)]="studentObj.guestOrganization" class="form-control" placeholder="Guest Organization">
+            </div>
+          </div>
+        <div class="row mt-3">
+          <div class="col-12 d-flex align-items-center">
+            <div class="form-check form-check-inline mr-2">
+              <input type="checkbox" [(ngModel)]="studentObj.venueRequired" style="margin-right: 10px;">
+              <label>Venue form</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venue Details -->
+        <div class="row mt-3" *ngIf="studentObj.venueRequired">
+          <div class="row mt-3">
+            <div class="col-6" style="margin-left: 20px;">
+              <label for="noOfVenueRequired">No Of Venue Required</label>
+              <input type="text" id="noOfVenueRequired" [(ngModel)]="studentObj.noOfVenueRequired" class="form-control" placeholder="No Of Venue Required">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12 d-flex align-items-center">
+            <div class="form-check form-check-inline mr-2">
+              <input type="checkbox" [(ngModel)]="studentObj.transportRequired" style="margin-right: 10px;">
+              <label>External Transport form</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3" *ngIf="studentObj.transportRequired">
+          <div class="col-6" style="margin-left: 20px;">
+            <div class="form-group">
+              <label for="purposeOfVisit">Purpose of Visit</label>
+              <input type="text" class="form-control" id="purposeOfVisit" [(ngModel)]="studentObj.purposeOfVisit" placeholder="Purpose of Visit">
+            </div>
+            <div class="form-group">
+              <label for="accompanyingPassengers">No. of accompanying passengers (If any)</label>
+              <input type="text" class="form-control" id="accompanyingPassengers" [(ngModel)]="studentObj.accompanyingPassengers" placeholder="No. of accompanying passengers">
+            </div>
+            <div class="form-group">
+              <label for="transportDetails">Bus / Train / Flight Details</label>
+              <textarea class="form-control" id="transportDetails" [(ngModel)]="studentObj.transportDetails" placeholder="Bus / Train / Flight Details"></textarea>
+            </div>
+          </div>
+        </div>
+
+          <div class="row mt-3">
+            <div class="col-12 d-flex align-items-center">
+              <div class="form-check form-check-inline mr-2">
+                <input type="checkbox" [(ngModel)]="studentObj.internaltransportRequired" style="margin-right: 10px;">
+                <label>Internal Transport form</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3" *ngIf="studentObj.internaltransportRequired">
+            <div class="col-6" style="margin-left: 20px;">
+              <div class="form-group">
+                <label>Starting Place</label>
+                <input type="text" class="form-control" id="startingplace" [(ngModel)]="studentObj.startingplace" placeholder="Starting place">
+              </div>
+              <div class="form-group">
+                <label >End Place</label>
+                <input type="text" class="form-control" id="endplace" [(ngModel)]="studentObj.endplace" placeholder="End Place">
+              </div>
+              <div class="form-group">
+                <label>No of persons</label>
+                <textarea class="form-control" id="noofpersons" [(ngModel)]="studentObj.noofpersons" placeholder="No Of Persons"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 d-flex align-items-center">
+              <div class="form-check form-check-inline mr-2">
+                <input type="checkbox" [(ngModel)]="studentObj.accommodationRequired" style="margin-right: 10px;">
+                <label>Guest accommodation dining form</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3" *ngIf="studentObj.accommodationRequired">
+            <div class="col-6" style="margin-left: 20px;">
+              <div class="form-group">
+                <label for="purposeOfVisit">Arriving Time</label>
+                <input type="text" class="form-control" id="arrivingtime" [(ngModel)]="studentObj.arrivingtime" placeholder="Purpose of Visit">
+              </div>
+              <div class="form-group">
+                <label>Guiding Faculty</label>
+                <input type="text" class="form-control" id="guidingfaculty" [(ngModel)]="studentObj.guidingfaculty" placeholder="Guiding Faculty">
+              </div>
+              <div class="form-group">
+                <label for="transportDetails">Room Type</label>
+                <textarea class="form-control" id="guestroomtype" [(ngModel)]="studentObj.guestroomtype" placeholder="Guest Room Type"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 d-flex align-items-center">
+              <div class="form-check form-check-inline mr-2">
+                <input type="checkbox" [(ngModel)]="studentObj.accessoriesRequired" style="margin-right: 10px;">
+                <label>Accessories form</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3" *ngIf="studentObj.accessoriesRequired">
+            <div class="col-6" style="margin-left: 20px;">
+              <div class="form-group">
+                <label for="purposeOfVisit">Scribbling Pad</label>
+                <input type="text" class="form-control" id="pad" [(ngModel)]="studentObj.pad" placeholder="Scribbling Pad">
+              </div>
+              <div class="form-group">
+                <label for="accompanyingPassengers">No of Water Bottles</label>
+                <input type="text" class="form-control" id="waterbottles" [(ngModel)]="studentObj.waterbottles" placeholder=" No of Water Bottles">
+              </div>
+            </div>
+          </div>
+            <div class="row mt-3">
+              <div class="col-12 d-flex align-items-center">
+                <div class="form-check form-check-inline mr-2">
+                  <input type="checkbox" [(ngModel)]="studentObj.audioRequired" style="margin-right: 10px;">
+                  <label>Audio form</label>
+                </div>
+              </div>
+            </div>
+          <div class="row mt-3" *ngIf="studentObj.audioRequired">
+            <div class="col-6" style="margin-left: 20px;">
+              <div class="form-group">
+                <label>No Of Hand Mic</label>
+                <input type="text" class="form-control" id="handmic" [(ngModel)]="studentObj.handmic" placeholder="No Of Hand Mic">
+              </div>
+              <div class="form-group">
+                <label>No Of Collar Mic</label>
+                <input type="text" class="form-control" id="collarmic" [(ngModel)]="studentObj.collarmic" placeholder="No of Collar Mic">
+              </div>
+            </div>
+          </div>
+            <div class="row mt-3">
+              <div class="col-12 d-flex align-items-center">
+                <div class="form-check form-check-inline mr-2">
+                  <input type="checkbox" [(ngModel)]="studentObj.hostelRequired" style="margin-right: 10px;">
+                  <label>Hostel accommodation dining form</label>
+                </div>
+              </div>
+            </div>
+          <div class="row mt-3" *ngIf="studentObj.hostelRequired">
+            <div class="col-6" style="margin-left: 20px;">
+              <div class="form-group">
+                <label>Accommodation Type</label>
+                <input type="text" class="form-control" id="type" [(ngModel)]="studentObj.type" placeholder="Accommodation Type">
+              </div>
+              <div class="form-group">
+                <label>Dining Request</label>
+                <input type="text" class="form-control" id="dining" [(ngModel)]="studentObj.dining" placeholder="Dining Request">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
+            <button *ngIf="studentObj.id === 0" type="button" class="btn btn-primary" (click)="saveStudent(false)">Save Event</button>
+            <button *ngIf="studentObj.id !== 0" type="button" class="btn btn-success" (click)="saveStudent(true)">Update Event</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
